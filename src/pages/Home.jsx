@@ -1,4 +1,15 @@
+import { useAuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
 export default function Home() {
+    const { user, logoutUser } = useAuthContext(); 
+    const navigate = useNavigate();   
+
+    const handleLogout = () => {
+      logoutUser();
+      navigate('/auth/login');
+    };
+
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col">
         {/* Menu superior */}
@@ -19,6 +30,7 @@ export default function Home() {
               <li>
                 <button
                   className="text-white bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                  onClick={handleLogout}
                 >
                   Sair
                 </button>
@@ -32,6 +44,14 @@ export default function Home() {
           <div className="text-center">
             <h2 className="text-3xl font-semibold text-gray-800 mb-4">
               Bem-vindo de volta!
+              {user ? (
+        <>
+          <p>Usuário logado: {user.email}</p>
+          <button onClick={logoutUser}>Sair</button>
+        </>
+      ) : (
+        <p>Nenhum usuário logado.</p>
+      )}
             </h2>
             <p className="text-gray-600 text-lg">Você está logado com sucesso.</p>
           </div>

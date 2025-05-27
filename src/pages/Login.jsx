@@ -1,15 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import ucdblogo from "../assets/ucdbimg.jpg";
-import React from 'react';
+import { useState } from 'react';
+import { useAuth } from '../hooks/useAuth';
 
 const LoginPage = () => {
-  const navigate = useNavigate();
+  const { loginWithEmail, loading, error } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleLogin = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/home");
+    loginWithEmail(email, password);
   };
-  
+
   return (
     <div className="bg-gray-100 flex justify-center items-center h-screen">
       <div className="w-1/2 h-screen hidden lg:block">
@@ -22,18 +25,21 @@ const LoginPage = () => {
 
       <div className="lg:p-36 md:p-52 sm:p-20 p-8 w-full lg:w-1/2">
         <h1 className="text-2xl font-semibold mb-4">Login</h1>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleSubmit}>
 
           <div className="mb-4">
-            <label htmlFor="username" className="block text-gray-600">
-              Username
+            <label htmlFor="email" className="block text-gray-600">
+              Email
             </label>
             <input
               type="text"
-              id="username"
-              name="username"
+              id="email"
+              name="email"
               autoComplete="off"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
+              required
             />
           </div>
 
@@ -46,10 +52,15 @@ const LoginPage = () => {
               id="password"
               name="password"
               autoComplete="off"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
+              required
             />
           </div>
-        
+
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full"
@@ -64,4 +75,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
