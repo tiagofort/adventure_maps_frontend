@@ -5,7 +5,7 @@ import { useAuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 export const useAuth = () => {
-  const { loginUser } = useAuthContext();
+  const { user, loginUser, logoutUser } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -15,8 +15,8 @@ export const useAuth = () => {
     setError(null);
     try {
       const data = await login(email, password);
-      loginUser(data);
-      navigate('/'); // redireciona para Home após login
+      await loginUser(data);
+      navigate('/home');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -24,5 +24,12 @@ export const useAuth = () => {
     }
   };
 
-  return { loginWithEmail, loading, error };
+  return {
+    loginWithEmail,
+    logout: logoutUser,
+    loading,
+    error,
+    user,
+    isAuthenticated: !!user,
+  };
 };

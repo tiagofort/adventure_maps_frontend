@@ -1,5 +1,5 @@
-// src/context/AuthContext.jsx
 import { createContext, useContext, useState } from 'react';
+import { useLoading } from '../context/LoadingContext';
 
 const AuthContext = createContext();
 
@@ -9,14 +9,23 @@ export const AuthProvider = ({ children }) => {
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
-  const loginUser = (userData) => {
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const { setLoading } = useLoading();
+
+  const loginUser = async (userData) => {
+    setLoading(true);
+    await delay(1000);
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
+    setLoading(false);
   };
 
-  const logoutUser = () => {
+  const logoutUser = async() => {
+    setLoading(true);
+    await delay(1000);
     setUser(null);
     localStorage.removeItem('user');
+    setLoading(false);
   };
 
   return (
