@@ -13,13 +13,13 @@ const App = () => {
     <Routes>
       <Route path="/auth/login" element={<Login />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
 
       {isAuthenticated ? 
       (
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
           <Route path='/researchResults' element={<ResearchResults />} />
-          {/* Adicione outras rotas aqui */}
         </Route>
       ) : (
         <Route path="*" element={<Navigate to="/auth/login" />} />
