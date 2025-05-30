@@ -46,3 +46,12 @@ export const generateExcel = async () => {
     console.error('Erro ao gerar Excel:', error);
   }
 };
+
+export const deleteSearch = async (id) => {
+  try{
+      await fetch(`http://localhost:3000/dataResearch/${id}`, { method: 'DELETE' });
+  }catch (error){
+      console.error('Erro ao gerar Excel:', error);
+  }
+  
+}

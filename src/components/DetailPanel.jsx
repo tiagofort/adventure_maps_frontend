@@ -12,7 +12,7 @@ return (
       <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
         Detalhes da Pesquisa
       </h2>
-      <h3 className="text-lg font-semibold text-gray-700 mb-4 uppercase tracking-wide">
+      <h3 className="text-lg font-semibold text-gray-700 mb-4 uppercase tracking-wide underline">
         Dados Sociográficos
       </h3>
       <div className="space-y-2">
@@ -32,7 +32,7 @@ return (
         <p><strong>Renda:</strong> {item.salaryAverage}</p>
         <p><strong>Data de Criação:</strong> {new Date(item.createdAt).toLocaleString()}</p>
       </div>
-      <h3 className="text-lg font-semibold text-gray-700 mb-4 mt-4 uppercase tracking-wide">
+      <h3 className="text-lg font-semibold text-gray-700 mb-4 mt-4 uppercase tracking-wide underline">
         RESPOSTAS
       </h3>
       <div className="space-y-2">
