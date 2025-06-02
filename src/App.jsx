@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Layout from './components/Layout';
 import ResearchResults from './pages/ResearchResults';
+import ResearchAnalitics from './pages/ResearchAnalitics';
 import { useAuth } from './hooks/useAuth';
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
           <Route path='/researchResults' element={<ResearchResults />} />
+          <Route path='/researchAnalitics' element={<ResearchAnalitics />} />  
         </Route>
       ) : (
         <Route path="*" element={<Navigate to="/auth/login" />} />
