@@ -12,7 +12,7 @@ export default function ProgressChart ({ totalRespostas, meta = 2000 }) {
   const percentage = Math.min((totalRespostas / meta) * 100, 100).toFixed(1)
 
   return (
-    <div style={{ width: 400, height: 400, position: 'relative', textAlign: 'center' }}>
+    <div style={{ width: 500, height: 500, position: 'relative', textAlign: 'center' }}>
       <ResponsiveContainer>
         <PieChart>
           <Pie
