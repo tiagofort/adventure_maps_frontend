@@ -11,7 +11,7 @@ export default function RespostasChart() {
   const fetchStates = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:3000/socioDemographic/states');
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/socioDemographic/states`);
       const data = await res.json();
       setChartData(data);
     } catch (error) {
@@ -24,7 +24,7 @@ export default function RespostasChart() {
   const fetchCities = async (state) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:3000/socioDemographic/states/${state}/cities`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/socioDemographic/states/${state}/cities`);
       const data = await res.json();
       setChartData(data);
     } catch (error) {

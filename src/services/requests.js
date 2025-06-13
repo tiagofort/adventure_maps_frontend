@@ -1,5 +1,5 @@
 export const getAllSearch = async (token) => {
-  const response = await fetch('http://localhost:3000/dataResearch/', {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/dataResearch/`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ export const generateExcel = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const token = user?.token;
 
-    const response = await fetch('http://localhost:3000/dataResearch/export', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/dataResearch/export`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -49,7 +49,7 @@ export const generateExcel = async () => {
 
 export const deleteSearch = async (id) => {
   try{
-      await fetch(`http://localhost:3000/dataResearch/${id}`, { method: 'DELETE' });
+      await fetch(`${import.meta.env.VITE_API_URL}/dataResearch/${id}`, { method: 'DELETE' });
   }catch (error){
       console.error('Erro ao gerar Excel:', error);
   }
@@ -57,7 +57,7 @@ export const deleteSearch = async (id) => {
 }
 
 export const countAnswers = async (token) => {
-  const response = await fetch('http://localhost:3000/dataResearch/countAnswers', {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/dataResearch/countAnswers`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
