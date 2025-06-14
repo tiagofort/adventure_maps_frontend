@@ -1,4 +1,7 @@
-export const getAllSearch = async (token) => {
+export const getAllSearch = async () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token = user?.token;
+
   const response = await fetch(`${import.meta.env.VITE_API_URL}/dataResearch/`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -71,4 +74,42 @@ export const countAnswers = async (token) => {
 
   return response.json();
 
+}
+
+export const getCities = async (state) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token = user?.token;
+
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/socioDemographic/states/${state}/cities`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Fetch failed');
+  }
+
+  return response.json();
+}
+
+export const getStates = async (state) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token = user?.token;
+
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/socioDemographic/states`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Fetch failed');
+  }
+
+  return response.json();
 }

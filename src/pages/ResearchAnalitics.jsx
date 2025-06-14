@@ -19,19 +19,16 @@ const ResearchAnalitics = () => {
         }
       };
       fetchDados();
-    }, []);  
+  }, []);  
 
   return (
     <div className="p-8">
       <h2 className="text-center mb-8 text-xl font-semibold">Progresso da Pesquisa</h2>
 
       <div className="flex flex-wrap justify-center gap-8">
-        {/* Gráfico de progresso */}
         <div className="w-full md:w-[calc(50%-1rem)] flex justify-center min-w-[300px]">
-          <ProgressChart totalRespostas={answer} />
+          <ProgressChart totalAnswers={answer} />
         </div>
-
-        {/* Gráfico por estado */}
         <div className="w-full md:w-[calc(50%-1rem)] flex justify-center min-w-[300px]">
           <StatesGraphBar />
         </div>

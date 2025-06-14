@@ -23,7 +23,9 @@ const App = () => {
           <Route path='/researchResults' element={<ResearchResults />} />
           <Route path='/researchAnalitics' element={<ResearchAnalitics />} />  
         </Route>
-      ) : (
+      )
+        :
+      (
         <Route path="*" element={<Navigate to="/auth/login" />} />
       )}
     </Routes>

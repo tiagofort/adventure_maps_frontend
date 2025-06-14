@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { getCities, getStates } from '../services/requests';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
@@ -11,8 +12,7 @@ export default function RespostasChart() {
   const fetchStates = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/socioDemographic/states`);
-      const data = await res.json();
+      const data = await getStates();
       setChartData(data);
     } catch (error) {
       console.error('Error fetching states:', error);
@@ -24,8 +24,7 @@ export default function RespostasChart() {
   const fetchCities = async (state) => {
     setLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/socioDemographic/states/${state}/cities`);
-      const data = await res.json();
+      const data = await getCities(state);
       setChartData(data);
     } catch (error) {
       console.error('Error fetching cities:', error);
