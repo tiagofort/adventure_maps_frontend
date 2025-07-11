@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Layout from './components/Layout';
 import ResearchResults from './pages/ResearchResults';
 import ResearchAnalitics from './pages/ResearchAnalitics';
+import UserManagement from './pages/Users';
 import { useAuth } from './hooks/useAuth';
 
 const App = () => {
@@ -21,7 +22,8 @@ const App = () => {
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
           <Route path='/researchResults' element={<ResearchResults />} />
-          <Route path='/researchAnalitics' element={<ResearchAnalitics />} />  
+          <Route path='/researchAnalitics' element={<ResearchAnalitics />} />
+          <Route path='/users' element={<UserManagement />} />
         </Route>
       )
         :
