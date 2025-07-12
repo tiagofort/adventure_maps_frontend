@@ -24,11 +24,10 @@ const ResearchAnalitics = () => {
               logoutAndRedirect(); 
               return;
             }
-            
+
             setAnswer(data)
         } catch (error) {
             console.error('Erro ao carregar dados:', error);
-        } finally {
         }
       };
       fetchDados();

@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getCities, getStates } from '../services/requests';
-import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
-} from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function RespostasChart() {
   const [selectedState, setSelectedState] = useState(null);
