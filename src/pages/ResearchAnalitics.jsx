@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react';
 import ProgressChart from '../components/ProgressChart';
 import StatesGraphBar from '../components/StatesGraphBar';
-import { countAnswers } from '../services/requests'
+import { countAnswers } from '../services/requests';
+import { useNavigate } from 'react-router-dom';
 
 const ResearchAnalitics = () => {
-    const [answer, setAnswer] = useState();
+  const [answer, setAnswer] = useState();
+  const navigate = useNavigate();
+
+  const logoutAndRedirect = () => {
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
     
   useEffect(() => {
       const fetchDados = async () => {
@@ -12,6 +19,12 @@ const ResearchAnalitics = () => {
             const user = JSON.parse(localStorage.getItem('user'));
             const token = user?.token;
             const data = await countAnswers(token);
+
+            if (!data) {
+              logoutAndRedirect(); 
+              return;
+            }
+            
             setAnswer(data)
         } catch (error) {
             console.error('Erro ao carregar dados:', error);

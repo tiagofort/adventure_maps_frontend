@@ -3,6 +3,7 @@ import { Trash2, Eye } from "lucide-react";
 import { getAllSearch, generateExcel, deleteSearch } from '../services/requests';
 import DetailPanel from '../components/DetailPanel';
 import ConfirmDialog from '../components/ConfirmDialog';
+import { useNavigate } from 'react-router-dom';
 
 const ResearchResults = () => {
   const [searchs, setResearch] = useState([]);
@@ -11,6 +12,12 @@ const ResearchResults = () => {
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const [showDialog, setShowDialog] = useState(false);
   const [toDelete, setID] = useState(null);
+  const navigate = useNavigate();
+
+  const logoutAndRedirect = () => {
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
 
   useEffect(() => {
     const fetchDados = async () => {
@@ -18,6 +25,12 @@ const ResearchResults = () => {
       await delay(1500);
       try {
         const data = await getAllSearch();
+        
+        if (!data) {
+          logoutAndRedirect(); 
+          return;
+        }
+
         setResearch(data);
       } catch (error) {
         console.error('Erro ao carregar dados:', error);

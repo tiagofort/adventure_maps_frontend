@@ -9,6 +9,10 @@ export const getAllSearch = async () => {
       },
   });
 
+  if (response.status === 401) {
+      return null; 
+  }
+
   if (!response.ok) {
     const error = await response.json();
     throw new Error(error.message || 'Fetch failed');
@@ -67,6 +71,10 @@ export const countAnswers = async (token) => {
     },
   });
 
+  if (response.status === 401) {
+      return null; 
+  }
+
   if (!response.ok) {
     const error = await response.json();
     throw new Error(error.message || 'Fetch failed');
@@ -112,4 +120,58 @@ export const getStates = async (state) => {
   }
 
   return response.json();
+}
+
+export const getUsers = async () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token = user?.token;
+
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (response.status === 401) return response.status;
+
+  const data = await response.json();
+
+  return data;
+}
+
+export const manipulateUserData = async (payload, editingId) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token = user?.token;
+
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/users${editingId ? `/${editingId}` : ''}`,
+    {
+      method: editingId ? 'PUT' : 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+        body: JSON.stringify(payload),
+    }
+  );
+
+  if (response.status === 401) return response.status;
+
+  if (!response.ok) throw new Error(response.statusText);
+
+  const data = await response.json();
+
+  return data;
+}
+
+export const editUser = async (id) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token = user?.token;
+
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (response.status === 401) return response.status;
+
+  const data = response.json();
+
+  return data
 }

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getUsers, manipulateUserData, editUser } from '../services/requests';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -6,15 +8,19 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [form, setForm] = useState({ email: '', password: '', active: true });
   const [editingId, setEditingId] = useState(null);
+  const navigate = useNavigate();
 
   const token = JSON.parse(localStorage.getItem('user'))?.token;
 
+  const logoutAndRedirect = () => {
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
+
   const fetchUsers = async () => {
     try {
-      const res = await fetch(`${API_URL}/users`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
+      const data = await getUsers();
+      if (data === 401) return logoutAndRedirect();
       setUsers(data);
     } catch (err) {
       console.error('Erro ao carregar usuários:', err.message);
@@ -38,20 +44,12 @@ const Users = () => {
     }
 
     try {
-      const res = await fetch(
-        `${API_URL}/users${editingId ? `/${editingId}` : ''}`,
-        {
-          method: editingId ? 'PUT' : 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(payload),
-        }
-      );
       
-      if (!res.ok) throw new Error(res.message);
-      const savedUser = await res.json();
+      const data = await manipulateUserData(payload, editingId);
+
+      if (data === 401) return logoutAndRedirect();
+
+      const savedUser = data;
 
       if (editingId) {
         setUsers((prev) =>
@@ -70,16 +68,18 @@ const Users = () => {
 
   const handleEdit = async (id) => {
     try {
-      const res = await fetch(`${API_URL}/users/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await editUser(id);
 
-      const data = await res.json();
+      if (response === 401) return logoutAndRedirect();
+
+      const data = response;
+
       setForm({
         email: data.email ?? '',
         password: '',
         active: data.active ?? true,
       });
+
       setEditingId(data._id);
     } catch (err) {
       console.error('Erro ao buscar usuário:', err.message);
@@ -127,7 +127,6 @@ const Users = () => {
 
           <div className="flex items-center gap-4">
             <label className="text-sm font-medium">Ativo</label>
-            {/* Switch estilizado */}
             <button
               type="button"
               onClick={() =>

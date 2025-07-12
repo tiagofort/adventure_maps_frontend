@@ -11,7 +11,7 @@ export const login = async (email, password) => {
     throw new Error(error.message || 'Login failed');
   }
 
-  return response.json(); // assuming it returns token/user info
+  return response.json();
 };
 
 
