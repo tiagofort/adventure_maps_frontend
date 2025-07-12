@@ -109,8 +109,8 @@ This project is for academic use only and is not intended for commercial purpose
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
-cd your-project
+git clone https://github.com/tiagofort/ucdb_admin.git
+cd ucdb_admin
 
 # Install dependencies
 npm install
