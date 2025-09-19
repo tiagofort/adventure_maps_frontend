@@ -50,7 +50,7 @@ export default function Home() {
     try {
       const formData = new FormData();
       formData.append("file", file);
-
+      // http://localhost:8000/upload
       const res = await fetch("http://localhost:8000/upload", {
         method: "POST",
         body: formData,
